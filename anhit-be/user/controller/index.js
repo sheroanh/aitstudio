@@ -70,7 +70,7 @@ const setCookies = (req, res, next) => {
     if (!token) return res.sendStatus(403);
     return res
       .cookie("access_token", req.token, {
-        httpOnly: true,
+        httpOnly: false,
         secure: process.env.NODE_ENV === "production",
         expires: new Date(Date.now() + 3600 * 24 * 30),
         domain: WEB_BASE_DOMAIN,
