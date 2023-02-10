@@ -1,0 +1,23 @@
+{
+  "name": "anhit-be",
+  "version": "1.0.0",
+  "description": "AiT Studio Back-end",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "googleapis": "^110.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.20",
+    "qrcode": "^1.5.1"
+  }
+}
