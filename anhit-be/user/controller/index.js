@@ -68,22 +68,20 @@ const setCookies = (req, res, next) => {
   try {
     var token = req.token;
     if (!token) return res.sendStatus(403);
-    return res
-      .cookie("access_token", req.token, {
+    res.cookie("access_token", req.token, {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      expires: new Date(Date.now() + 3600 * 24 * 30),
+      domain: WEB_BASE_DOMAIN,
+    });
+    return res.status(200).json({
+      message: {
         httpOnly: false,
         secure: process.env.NODE_ENV === "production",
         expires: new Date(Date.now() + 3600 * 24 * 30),
         domain: WEB_BASE_DOMAIN,
-      })
-      .status(200)
-      .json({
-        message: {
-          httpOnly: false,
-          secure: process.env.NODE_ENV === "production",
-          expires: new Date(Date.now() + 3600 * 24 * 30),
-          domain: WEB_BASE_DOMAIN,
-        },
-      });
+      },
+    });
   } catch (err) {
     return res.status(403).json({ message: "Invaild Token" });
   }
