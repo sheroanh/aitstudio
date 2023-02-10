@@ -76,7 +76,14 @@ const setCookies = (req, res, next) => {
         domain: WEB_BASE_DOMAIN,
       })
       .status(200)
-      .json({ message: "Logged in successfully" });
+      .json({
+        message: {
+          httpOnly: false,
+          secure: process.env.NODE_ENV === "production",
+          expires: new Date(Date.now() + 3600 * 24 * 30),
+          domain: WEB_BASE_DOMAIN,
+        },
+      });
   } catch (err) {
     return res.status(403).json({ message: "Invaild Token" });
   }
