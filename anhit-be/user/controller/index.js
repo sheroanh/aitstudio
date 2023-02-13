@@ -5,6 +5,7 @@ const { query, queryResult } = require("../../utils/sql.js");
 
 const SECRET_KEY = process.env.SECRET_KEY;
 const WEB_BASE_DOMAIN = process.env.WEB_BASE_DOMAIN;
+const WEB_BASE_URI = process.env.WEB_BASE_URI;
 
 function makeid(length) {
   let result = "";
@@ -64,27 +65,26 @@ const generateJWT = async (req, res, next) => {
   }
 };
 
-const setCookies = (req, res, next) => {
+const setCookies = async (req, res, next) => {
   try {
     var token = req.token;
     if (!token) return res.sendStatus(403);
-    res.cookie("access_token", req.token, {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      expires: new Date(Date.now() + 3600 * 24 * 30),
-      domain: WEB_BASE_DOMAIN,
+    await res.cookie("access_token", req.token, {
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+      maxAge: 3600000 * 24,
+      sameSite: "none",
     });
-    return res.status(200).json({
-      message: {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === "production",
-        expires: new Date(Date.now() + 3600 * 24 * 30),
-        domain: WEB_BASE_DOMAIN,
-      },
-    });
+    delete token;
+    return next();
   } catch (err) {
-    return res.status(403).json({ message: "Invaild Token" });
+    return res.status(403).json({ message: "Unknow error!" });
   }
+};
+
+const redirect = (req, res, next) => {
+  return res.redirect(WEB_BASE_URI);
 };
 
 const authorization = (req, res, next) => {
@@ -126,4 +126,5 @@ module.exports = {
   callback,
   makeid,
   setCookies,
+  redirect,
 };
