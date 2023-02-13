@@ -31,6 +31,13 @@ app.all("/", function (req, res) {
   res.status(200).json({ message: "Server is running" });
 });
 
+app.use((req, res) => {
+  return res.status(404).json({
+    statusCode: 404,
+    message: "Not Found",
+  });;
+});
+
 app.use((error, req, res, next) => {
   let { statusCode, message } = error;
 

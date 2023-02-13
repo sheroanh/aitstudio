@@ -61,14 +61,14 @@ const generateJWT = async (req, res, next) => {
     req.token = token;
     return next();
   } catch (err) {
-    return res.status(403).json({ message: "Invaild Google Account" });
+    return next(err);
   }
 };
 
 const setCookies = async (req, res, next) => {
   try {
     var token = req.token;
-    if (!token) return res.sendStatus(403);
+    if (!token) throw new Error("Access Token is missing");
     await res.cookie("access_token", req.token, {
       sameSite: "none",
       secure: true,
@@ -79,7 +79,7 @@ const setCookies = async (req, res, next) => {
     delete token;
     return next();
   } catch (err) {
-    return res.status(403).json({ message: "Unknow error!" });
+    return next(err);
   }
 };
 
@@ -91,14 +91,14 @@ const authorization = (req, res, next) => {
   try {
     const token = req.cookies.access_token;
     if (!token) {
-      return res.status(403).json({ message: "Access token is required" });
+      throw new Error("Access Token is missing!");
     }
     const data = jwt.verify(token, SECRET_KEY);
     req.user = data;
     return next();
-  } catch {
+  } catch (error) {
     req.user = null;
-    return next();
+    return next(error);
   }
 };
 
@@ -114,7 +114,7 @@ const callback = async (req, res, next) => {
     req.user = data.data;
     return next();
   } catch (err) {
-    return res.status(403).json({ message: "Invalid request" });
+    return next(err);
   }
 };
 

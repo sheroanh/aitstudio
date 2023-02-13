@@ -13,7 +13,7 @@ var {
 } = require("../controller/index.js");
 
 router.all("/", function (req, res) {
-  return res.sendStatus(403);
+  return next(Error(403))
 });
 
 router.get("/google/login", async (req, res) => {
