@@ -1,5 +1,5 @@
 require("dotenv").config();
-var cors = require('cors')
+var cors = require("cors");
 var express = require("express");
 var cookieParser = require("cookie-parser");
 
@@ -13,19 +13,40 @@ var PORT = process.env.PORT || 5000;
 var HOSTNAME = process.env.HOSTNAME || "localhost";
 
 var corsOptions = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}
+  origin: [process.env.WEB_BASE_URI], // {my-frontend}.herokuapp.com
+  methods: ["GET", "PUT", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
+  credentials: true,
+  maxAge: 600,
+  exposedHeaders: ["*", "Authorization"],
+};
 
+app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 app.use("/user", userRoute);
 app.use("/short", shortRoute);
 
 app.all("/", function (req, res) {
-  res.status(200).json({message: "Server is running"});
+  res.status(200).json({ message: "Server is running" });
+});
+
+app.use((req, res) => {
+  return res.status(404).json({
+    statusCode: 404,
+    message: "Not Found",
+  });;
+});
+
+app.use((error, req, res, next) => {
+  let { statusCode, message } = error;
+
+  statusCode = statusCode ? statusCode : 500;
+
+  res.status(statusCode).json({
+    statusCode,
+    message,
+  });
 });
 
 app.listen(PORT, HOSTNAME, function (err) {

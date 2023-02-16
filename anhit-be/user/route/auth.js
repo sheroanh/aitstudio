@@ -9,10 +9,11 @@ var {
   callback,
   makeid,
   setCookies,
+  redirect,
 } = require("../controller/index.js");
 
 router.all("/", function (req, res) {
-  return res.sendStatus(403);
+  return next(Error(403))
 });
 
 router.get("/google/login", async (req, res) => {
@@ -20,7 +21,7 @@ router.get("/google/login", async (req, res) => {
   res.json({ data: url });
 });
 // Handle Redirect URL
-router.get("/google/callback", callback, generateJWT, setCookies);
+router.get("/google/callback", callback, generateJWT, setCookies, redirect);
 // Upsert User
 
 //export this router to use in our index.js

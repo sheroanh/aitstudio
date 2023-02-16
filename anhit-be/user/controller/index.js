@@ -5,6 +5,7 @@ const { query, queryResult } = require("../../utils/sql.js");
 
 const SECRET_KEY = process.env.SECRET_KEY;
 const WEB_BASE_DOMAIN = process.env.WEB_BASE_DOMAIN;
+const WEB_BASE_URI = process.env.WEB_BASE_URI;
 
 function makeid(length) {
   let result = "";
@@ -60,33 +61,30 @@ const generateJWT = async (req, res, next) => {
     req.token = token;
     return next();
   } catch (err) {
-    return res.status(403).json({ message: "Invaild Google Account" });
+    return next(err);
   }
 };
 
-const setCookies = (req, res, next) => {
+const setCookies = async (req, res, next) => {
   try {
     var token = req.token;
-    if (!token) {
-      throw new Error("Token is missing");
-    }
-    res.cookie("access_token", req.token, {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      expires: new Date(Date.now() + 3600 * 24 * 30),
-      domain: WEB_BASE_DOMAIN,
+    if (!token) throw new Error("Access Token is missing");
+    await res.cookie("access_token", req.token, {
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
+      maxAge: 3600000 * 24,
+      sameSite: "none",
     });
-    return res.status(200).json({
-      message: {
-        httpOnly: false,
-        secure: process.env.NODE_ENV === "production",
-        expires: new Date(Date.now() + 3600 * 24 * 30),
-        domain: WEB_BASE_DOMAIN,
-      },
-    });
+    delete token;
+    return next();
   } catch (err) {
     return next(err);
   }
+};
+
+const redirect = (req, res, next) => {
+  return res.redirect(WEB_BASE_URI);
 };
 
 const authorization = (req, res, next) => {
@@ -96,13 +94,13 @@ const authorization = (req, res, next) => {
       throw new Error("Token is missing");
     }
     const data = jwt.verify(token, SECRET_KEY);
-    const user = queryResult("SELECT * FROM users WHERE id = ?", [data.id])
+    const user = queryResult("SELECT * FROM users WHERE id = ?", [data.id]);
     if (user.length != 1) {
       throw new Error("User not found");
     }
     req.user = data;
     return next();
-  } catch (err){
+  } catch (err) {
     return next(err);
   }
 };
@@ -131,4 +129,5 @@ module.exports = {
   callback,
   makeid,
   setCookies,
+  redirect,
 };
