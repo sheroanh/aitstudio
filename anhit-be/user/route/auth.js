@@ -1,27 +1,19 @@
-const { response } = require("express");
-var express = require("express");
-var router = express.Router();
-var {
-  authorization,
+const express = require("express");
+const router = express.Router();
+const {
   generateJWT,
-  getAuthUrl,
-  oAuth2Client,
-  callback,
-  makeid,
   setCookies,
   redirect,
+  googleLoginSuccess
 } = require("../controller/index.js");
-
-router.all("/", function (req, res) {
-  return next(Error(403))
-});
+const { makeId, getAuthUrl, oAuth2Client, googleCallback } = require("../../utils/index")
 
 router.get("/google/login", async (req, res) => {
   const url = getAuthUrl();
-  res.json({ data: url });
+  res.status(200).json({ status: "success", data: url });
 });
 // Handle Redirect URL
-router.get("/google/callback", callback, generateJWT, setCookies, redirect);
+router.get("/google/callback", googleCallback, generateJWT, setCookies, googleLoginSuccess);
 // Upsert User
 
 //export this router to use in our index.js

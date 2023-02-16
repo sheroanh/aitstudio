@@ -1,4 +1,4 @@
-import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
+const { getLinkPreview, getPreviewFromContent } = require("link-preview-js");
 
 function getPreivew(content, callback) {
   return new Promise((resolve, reject) => {

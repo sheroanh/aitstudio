@@ -72,11 +72,15 @@ const initialize = () => {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       expiries TIMESTAMP DEFAULT NULL, 
       state VARCHAR(10),
+      password TEXT,
+      CONSTRAINT short_id_pk PRIMARY KEY(id),
+      CONSTRAINT short_path_name_un UNIQUE (path_name),
+      CONSTRAINT short_user_id_fk FOREIGN KEY (user_id) REFERENCES user(ID)
     )`;
-  // database.query(sql, function (err, results) {
-  //   if (err) throw err;
-  //   console.log("- Table user is ready");
-  // });
+    database.query(sql, function (err, results) {
+      if (err) throw err;
+      console.log("- Table short is ready");
+    });
   } catch (err) {
     console.log(err);
   }

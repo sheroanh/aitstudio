@@ -6,14 +6,13 @@ var cookieParser = require("cookie-parser");
 var app = express();
 var userRoute = require("./user/route/index.js");
 var shortRoute = require("./short/route.js");
-var database = require("./database/index.js");
 var initialize = require("./database/initialize.js");
 
 var PORT = process.env.PORT || 5000;
 var HOSTNAME = process.env.HOSTNAME || "localhost";
 
 var corsOptions = {
-  origin: [process.env.WEB_BASE_URI], // {my-frontend}.herokuapp.com
+  origin: [process.env.WEB_BASE_URI, "http://localhost:3000"],
   methods: ["GET", "PUT", "POST"],
   allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
   credentials: true,
@@ -33,18 +32,17 @@ app.all("/", function (req, res) {
 
 app.use((req, res) => {
   return res.status(404).json({
-    statusCode: 404,
+    status: "failure",
     message: "Not Found",
   });;
 });
 
 app.use((error, req, res, next) => {
   let { statusCode, message } = error;
-
   statusCode = statusCode ? statusCode : 500;
 
   res.status(statusCode).json({
-    statusCode,
+    status: "failure",
     message,
   });
 });
