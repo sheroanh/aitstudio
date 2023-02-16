@@ -62,15 +62,17 @@ const initialize = () => {
       if (err) throw err;
       console.log("- Table uit_subject_list is ready");
     });
-  //   var sql = `CREATE TABLE IF NOT EXISTS short_qr (
-  //     id CHAR(6),
-  //     user_id CHAR(6),
-  //     name VARCHAR(255),
-  //     type TEXT,
-  //     content TEXT,
-  //     state VARCHAR(10),
-
-  //   )`;
+    var sql = `CREATE TABLE IF NOT EXISTS short (
+      id CHAR(6),
+      user_id CHAR(6),
+      name VARCHAR(255),
+      path_name VARCHAR(255),
+      type VARCHAR(10),
+      content TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      expiries TIMESTAMP DEFAULT NULL, 
+      state VARCHAR(10),
+    )`;
   // database.query(sql, function (err, results) {
   //   if (err) throw err;
   //   console.log("- Table user is ready");

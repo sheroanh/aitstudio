@@ -67,7 +67,9 @@ const generateJWT = async (req, res, next) => {
 const setCookies = (req, res, next) => {
   try {
     var token = req.token;
-    if (!token) return res.sendStatus(403);
+    if (!token) {
+      throw new Error("Token is missing");
+    }
     res.cookie("access_token", req.token, {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
@@ -83,7 +85,7 @@ const setCookies = (req, res, next) => {
       },
     });
   } catch (err) {
-    return res.status(403).json({ message: "Invaild Token" });
+    return next(err);
   }
 };
 
@@ -91,14 +93,17 @@ const authorization = (req, res, next) => {
   try {
     const token = req.cookies.access_token;
     if (!token) {
-      return res.status(403).json({ message: "Access token is required" });
+      throw new Error("Token is missing");
     }
     const data = jwt.verify(token, SECRET_KEY);
+    const user = queryResult("SELECT * FROM users WHERE id = ?", [data.id])
+    if (user.length != 1) {
+      throw new Error("User not found");
+    }
     req.user = data;
     return next();
-  } catch {
-    req.user = null;
-    return next();
+  } catch (err){
+    return next(err);
   }
 };
 
@@ -114,7 +119,7 @@ const callback = async (req, res, next) => {
     req.user = data.data;
     return next();
   } catch (err) {
-    return res.status(403).json({ message: "Invalid request" });
+    return next(err);
   }
 };
 
