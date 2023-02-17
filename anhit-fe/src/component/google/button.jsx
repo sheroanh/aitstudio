@@ -29,15 +29,13 @@ export default function GoogleLoginButton() {
     }
     const failureCallback = async () => {
         setCheck(true)
-        toast.error("Xác thực thất bại")
+        toast.error("Lỗi! Không thể xác thực tài khoản Google")
         setCheck(false)
     }
 
     return (
         <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_API_CLIENT_ID}
-            uxMode="redirect"
-            redirectUri={process.env.REACT_APP_GOOGLE_API_CALLBACK}
             buttonText={(!check) ? "Tiếp tục với Google" : "Đang xác thực"}
             disabled={check}
             onSuccess={successCallback}
