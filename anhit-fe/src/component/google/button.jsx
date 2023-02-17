@@ -10,7 +10,6 @@ export default function GoogleLoginButton() {
     const { isLoggedIn, isLoading, user, setLoading, setUser, setLoggedIn, getInfo } =
         useAuth();
     const [check, setCheck] = useState(false);
-    const [redirectPathname, setRedirectPathname] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
     const successCallback = async ({ code }) => {
         setCheck(true)
@@ -22,9 +21,7 @@ export default function GoogleLoginButton() {
         var result = await getInfo()
         if (result){
             toast.success("Xác thực thành công")
-            setRedirectPathname(searchParams.get("continue"))
-            console.log(redirectPathname)
-            redirect(redirectPathname == null ? "/" : redirectPathname)
+            redirect(searchParams.get("continue") == null ? "/" : searchParams.get("continue"))
         }
         else
             toast.error("Xác thực thất bại")
