@@ -23,7 +23,7 @@ root.render(
       },
       iconTheme: {
         primary: 'white',
-        secondary: 'black',
+        secondary: 'green',
       },
     },
     error: {
@@ -33,7 +33,7 @@ root.render(
       },
       iconTheme: {
         primary: 'white',
-        secondary: 'black',
+        secondary: 'red',
       },
     },
   }}/>

@@ -23,6 +23,7 @@ export default function GoogleLoginButton() {
         if (result){
             toast.success("Xác thực thành công")
             setRedirectPathname(searchParams.get("continue"))
+            console.log(redirectPathname)
             redirect(redirectPathname == null ? "/" : redirectPathname)
         }
         else

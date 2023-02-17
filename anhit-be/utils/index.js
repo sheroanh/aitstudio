@@ -33,6 +33,7 @@ function getAuthUrl() {
 
 const googleCallback = async (req, res, next) => {
     try {
+      console.log(req.query);
       const { code } = req.query;
       const { tokens } = await oAuth2Client.getToken(code);
       oAuth2Client.credentials = tokens;

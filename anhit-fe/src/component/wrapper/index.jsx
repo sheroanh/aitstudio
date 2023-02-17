@@ -1,13 +1,13 @@
 import { useAuth } from "../provider";
 import { LoadingPage } from "../loading";
-import { redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const Guest = ({ children }) => {
     const { isLoading, isLoggedIn } = useAuth();
     return (
         <>
             {(isLoading) ? <LoadingPage /> :
-                ((isLoggedIn) ? redirect("/") : children)}
+                ((isLoggedIn) ? <Navigate to="/" replace={true} /> : children)}
         </>
     )
 }
@@ -25,7 +25,7 @@ export const Private = ({ children }) => {
     return (
         <>
             {(isLoading) ? <LoadingPage /> :
-                ((isLoggedIn) ? children : redirect("/login"))}
+                ((isLoggedIn) ? children : <Navigate to="/login" replace={true} />)}
         </>
     )
 }
