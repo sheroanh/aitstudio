@@ -36,7 +36,6 @@ export default function GoogleLoginButton() {
             buttonText={(!check) ? "Tiếp tục với Google" : "Đang xác thực"}
             disabled={check}
             onSuccess={successCallback}
-            onFailure={successCallback}
             responseType={"code"}
         />
     );
