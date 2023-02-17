@@ -27,6 +27,11 @@ export default function GoogleLoginButton() {
             toast.error("Xác thực thất bại")
         setCheck(false)
     }
+    const failureCallback = async () => {
+        setCheck(true)
+        toast.error("Xác thực thất bại")
+        setCheck(false)
+    }
 
     return (
         <GoogleLogin
@@ -36,6 +41,7 @@ export default function GoogleLoginButton() {
             buttonText={(!check) ? "Tiếp tục với Google" : "Đang xác thực"}
             disabled={check}
             onSuccess={successCallback}
+            onFailure={failureCallback}
             responseType={"code"}
         />
     );
