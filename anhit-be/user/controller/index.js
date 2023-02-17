@@ -24,7 +24,7 @@ const generateJWT = async (req, res, next) => {
       );
     } else
       query(
-        `INSERT INTO user(id, email, google_id, display_name, avatar) VALUES (?);`,
+        `INSERT INTO user(id, email, google_id, display_name, avatar) VALUES (?, ?, ?, ?, ?);`,
         [makeId(6), email, id, name, picture]
       );
     var rows = await queryResult(`SELECT * FROM user WHERE google_id = ?;`, id);
