@@ -11,8 +11,12 @@ var initialize = require("./database/initialize.js");
 var PORT = process.env.PORT || 5000;
 var HOSTNAME = process.env.HOSTNAME || "localhost";
 
+const origin = [
+  process.env.WEB_BASE_URI, "http://localhost:3000", "*", "https://sso.anhit.name.vn"
+]
+
 var corsOptions = {
-  origin: [process.env.WEB_BASE_URI, "http://localhost:3000", "*"],
+  origin: origin,
   methods: ["GET", "PUT", "POST"],
   allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
   credentials: true,
