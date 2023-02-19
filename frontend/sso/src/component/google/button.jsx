@@ -20,20 +20,22 @@ export default function GoogleLoginButton() {
   const [searchParams, setSearchParams] = useSearchParams();
   const successCallback = async ({ code }) => {
     setCheck(true);
-    await request(
-      "get",
-      `/user/auth/google/callback`,
-      {
-        params: {
-          code: code,
-          redirectUrl: searchParams.get("redirectUrl") == null
-          ? process.env.REACT_APP_DEFAULT_REDIRECT_URL
-          : searchParams.get("redirectUrl")
-        },
-      }
-    ).then((res) => {
-        toast.success("Successfully logged in!. Redirecting...")
-    }).catch((err) => toast.error("Please try again. Error: " + err));
+    await request("get", `/user/auth/google/callback`, {
+      params: {
+        code: code,
+        redirectUrl:
+          searchParams.get("redirectUrl") == null
+            ? process.env.REACT_APP_DEFAULT_REDIRECT_URL
+            : searchParams.get("redirectUrl"),
+      },
+    })
+      .then((res) => {
+        if (res.data.status == "success") {
+          toast.success("Successfully logged in!. Redirecting...");
+          window.location.replace(res.data.data);
+        } else throw new Error();
+      })
+      .catch((err) => toast.error("Please try again. Error: " + err));
     setCheck(false);
   };
   const failureCallback = async () => {
