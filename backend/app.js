@@ -12,7 +12,7 @@ var PORT = process.env.PORT || 5000;
 var HOSTNAME = process.env.HOSTNAME || "localhost";
 
 var corsOptions = {
-  origin: [process.env.WEB_BASE_URI, "http://localhost:3000"],
+  origin: [process.env.WEB_BASE_URI, "http://localhost:3000", "*"],
   methods: ["GET", "PUT", "POST"],
   allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
   credentials: true,
@@ -22,6 +22,7 @@ var corsOptions = {
 
 app.use(express.json());
 app.use(cookieParser());
+// app.use(cors());
 app.use(cors(corsOptions));
 app.use("/user", userRoute);
 app.use("/short", shortRoute);

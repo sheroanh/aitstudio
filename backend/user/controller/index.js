@@ -1,4 +1,5 @@
 require("dotenv").config();
+const validator = require("validator");
 
 const jwt = require("jsonwebtoken");
 const { query, queryResult } = require("../../utils/sql.js");
@@ -44,7 +45,7 @@ const setCookies = async (req, res, next) => {
       sameSite: "none",
       secure: true,
       httpOnly: true,
-      maxAge: 3600000 * 24,
+      maxAge: 3600000 * 24 * 30,
     });
     delete token;
     return next();
@@ -54,9 +55,17 @@ const setCookies = async (req, res, next) => {
 };
 
 const googleLoginSuccess = (req, res, next) => {
-  return res.status(200).json({
-    status: "success",
-  });
+  const { redirectUrl } = req.query;
+  try {
+    res.header("Access-Control-Allow-Origin", "*");
+    if (redirectUrl != null) {
+      if (!validator.isURL(redirectUrl))
+        throw new Error("Invalid redirect URL. Please try again");
+      res.redirect(redirectUrl);
+    } else res.redirect(process.env.WEB_BASE_URI);
+  } catch (err) {
+    next(err);
+  }
 };
 
 const redirect = (req, res, next) => {
@@ -100,5 +109,5 @@ module.exports = {
   generateJWT,
   setCookies,
   redirect,
-  googleLoginSuccess
+  googleLoginSuccess,
 };
