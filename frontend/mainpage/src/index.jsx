@@ -41,7 +41,6 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Maintenance />} />
-        <Route path="/login" element={<LoginPage/>} />
         <Route path="/teky" element={<Teky/>} />
       </Routes>
     </BrowserRouter>
