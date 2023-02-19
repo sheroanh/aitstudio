@@ -57,12 +57,23 @@ const setCookies = async (req, res, next) => {
 const googleLoginSuccess = (req, res, next) => {
   const { redirectUrl } = req.query;
   try {
-    // res.header("Access-Control-Allow-Origin", "*");
     if (redirectUrl != null) {
       if (!validator.isURL(redirectUrl))
         throw new Error("Invalid redirect URL. Please try again");
+      const url = new URL(redirectUrl);
+      res.header(
+        "Access-Control-Allow-Origin",
+        url.protocol + "//" + url.hostname
+      );
       res.redirect(redirectUrl);
-    } else res.redirect(process.env.WEB_BASE_URI);
+    } else {
+      const url = new URL(process.env.WEB_BASE_URI);
+      res.header(
+        "Access-Control-Allow-Origin",
+        url.protocol + "//" + url.hostname
+      );
+      res.redirect(process.env.WEB_BASE_URI);
+    }
   } catch (err) {
     next(err);
   }
