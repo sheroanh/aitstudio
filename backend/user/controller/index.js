@@ -61,11 +61,8 @@ const googleLoginSuccess = (req, res, next) => {
     if (redirectUrl != null) {
       if (!validator.isURL(redirectUrl))
         throw new Error("Invalid redirect URL. Please try again");
-      const url = new URL(redirectUrl);
-      res.redirect(redirectUrl);
       return res.status(200).json({status: "success", data: redirectUrl})
     } else {
-      const url = new URL(process.env.WEB_BASE_URI);
       return res.status(200).json({status: "success", data: process.env.WEB_BASE_URI})
     }
   } catch (err) {
