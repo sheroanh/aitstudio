@@ -57,7 +57,7 @@ const setCookies = async (req, res, next) => {
 const googleLoginSuccess = (req, res, next) => {
   const { redirectUrl } = req.query;
   try {
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     if (redirectUrl != null) {
       if (!validator.isURL(redirectUrl))
         throw new Error("Invalid redirect URL. Please try again");
