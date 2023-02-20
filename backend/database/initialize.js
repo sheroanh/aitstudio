@@ -10,11 +10,7 @@ function handleConnection() {
   });
   database.on("error", function onError(err) {
     console.log("- Database is error:", err.code);
-    if (err.code == "PROTOCOL_CONNECTION_LOST") {
-      handleConnection();
-    } else {
-      throw err; // server variable configures this)
-    }
+    handleConnection();
   });
 }
 

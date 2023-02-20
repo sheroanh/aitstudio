@@ -10,9 +10,9 @@ export const FullScreen = ({children}) => {
 
 export const NavBar = ({children, accountBar = true}) => {
     return (
-        <div className="flex flex-col h-screen w-screen">
-            <AccountBar />
-            <div id="body" className="h-full w-full">{children}</div>
+        <div className="flex flex-col h-screen w-screen m-0">
+            <AccountBar/>
+            <div id="body" className="h-full w-full pt-7 z-0">{children}</div>
         </div>
     )
 }

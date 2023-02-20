@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Maintenance from "./pages/maintenance/index";
+import Home from "./pages/home";
 import { Provider } from "./component/provider";
 import {
   Route,
@@ -38,7 +39,7 @@ root.render(
   }}/>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Maintenance />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
   </Provider>
