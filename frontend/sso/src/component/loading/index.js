@@ -12,7 +12,7 @@ export const Loading = ({title = "Loading" ,message = "Checking your account..."
 
 export const LoadingPage = ({title,message}) => {
     return (
-        <div className="h-screen w-screen">
+        <div className="fixed top-0 left-0 h-screen w-screen z-1">
             <Loading title={title} message={message}/>
         </div>
     )

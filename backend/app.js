@@ -12,7 +12,7 @@ var PORT = process.env.PORT || 5000;
 var HOSTNAME = process.env.HOSTNAME || "localhost";
 
 const origin = [
-  process.env.WEB_BASE_URI, "http://localhost:3000", "https://sso.anhit.name.vn"
+  process.env.WEB_BASE_URI, "http://localhost:3000", "https://sso.anhit.name.vn", "http://localhost:3001"
 ]
 
 var corsOptions = {

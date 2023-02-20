@@ -5,7 +5,7 @@ import { LoginPage } from "./pages/login/index";
 import { Provider } from "./component/provider";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { CookiesProvider } from "react-cookie";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -35,12 +35,12 @@ root.render(
         },
       }}
     />
-    <CookiesProvider>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_API_CLIENT_ID}>
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
-    </CookiesProvider>
+    </GoogleOAuthProvider>
   </Provider>
 );

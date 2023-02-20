@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import Maintenance from "./pages/maintenance/index";
-import { LoginPage } from "./pages/login/index";
-import Teky from "./pages/teky";
 import { Provider } from "./component/provider";
 import {
   Route,
@@ -41,7 +39,6 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Maintenance />} />
-        <Route path="/teky" element={<Teky/>} />
       </Routes>
     </BrowserRouter>
   </Provider>

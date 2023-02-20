@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, createContext } from "react";
 import { request } from "../../service/axios";
+import { toast } from "react-hot-toast";
 
 export const useProvideAuth = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -25,6 +26,15 @@ export const useProvideAuth = () => {
     }
   };
 
+  const logOut = async () => {
+    const response = await request("get", "/user/logout");
+    if (response.data.status == "success") {
+      setUser(null);
+      setLoggedIn(false);
+      toast.success("You have logged out");
+    } else toast.error("Sorry, something went wrong. Please try again!");
+  };
+
   useEffect(() => {
     getInfo();
   }, []);
@@ -38,5 +48,6 @@ export const useProvideAuth = () => {
     setLoggedIn,
     setUser,
     getInfo,
+    logOut 
   };
 };
