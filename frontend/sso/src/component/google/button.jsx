@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GoogleLogin from "react-google-login";
 import { request } from "../../service/axios";
 import { toast } from "react-hot-toast";
@@ -9,11 +9,10 @@ export default function GoogleLoginButton() {
   const [check, setCheck] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
-
-  const successCallback = async ({ code }) => {
-    const redirectUrl = searchParams.get("redirectUrl") == null
+  const redirectUrl = searchParams.get("redirectUrl") == null
     ? process.env.REACT_APP_DEFAULT_REDIRECT_URL
     : searchParams.get("redirectUrl")
+  const successCallback = async ({ code }) => {
     setCheck(true);
     await request("get", `/user/auth/google/callback`, {
       params: {
@@ -39,6 +38,7 @@ export default function GoogleLoginButton() {
       })
       .catch((err) => toast.error("Please try again. Error: " + err));
     setCheck(false);
+    window.location.href = redirectUrl;
   };
   const failureCallback = async () => {
     setCheck(true);
