@@ -20,7 +20,7 @@ export const AccountBar = () => {
       <div className="flex items-center">
         <a
           href={!isLoggedIn ? process.env.REACT_APP_SSO_URL : "#"}
-          className="inline-block relative w-24 md:w-48 lg:w-full text-ellipsis overflow-hidden whitespace-nowrap font-semibold hover:bg-sky-600 hover:text-white p-2 md:px-2 "
+          className="hidden md:inline-block relative w-48 md:w-48 lg:w-full text-ellipsis overflow-hidden whitespace-nowrap font-semibold hover:bg-sky-600 hover:text-white p-2 md:px-2 "
         >
           {!isLoggedIn ? "My Account" : user.displayName}
         </a>
