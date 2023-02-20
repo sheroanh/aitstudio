@@ -7,15 +7,6 @@ import { toast } from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 
 export default function GoogleLoginButton() {
-  const {
-    isLoggedIn,
-    isLoading,
-    user,
-    setLoading,
-    setUser,
-    setLoggedIn,
-    getInfo,
-  } = useAuth();
   const [check, setCheck] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const successCallback = async ({ code }) => {
@@ -32,7 +23,7 @@ export default function GoogleLoginButton() {
       .then((res) => {
         if (res.data.status == "success") {
           toast.success("Successfully logged in!. Redirecting...");
-          window.location.replace(res.data.data);
+          // window.location.replace(res.data.data);
         } else throw new Error();
       })
       .catch((err) => toast.error("Please try again. Error: " + err));
