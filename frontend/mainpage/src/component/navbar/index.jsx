@@ -6,23 +6,40 @@ export const AccountBar = () => {
   return (
     <div className="flex items-center pl-3 justify-between w-screen h-fit shadow border-0 border-b">
       <div className="flex items-center gap-5 p-1">
-        <img className="w-8" src="/logo.svg"/>
+        <img className="w-8" src="/logo.svg" />
         <div className="flex items-center justify-between overflow-y-auto gap-5 h-8">
-        {shortcuts.map((shortcut, index) => {
-          return (
-            <a href={shortcut.url} key={`shortcut-${index}`} className="whitespace-nowrap">
-              {shortcut.name}
-            </a>
-          );
-        })}
+          {shortcuts.map((shortcut, index) => {
+            return (
+              <a
+                href={shortcut.url}
+                key={`shortcut-${index}`}
+                className="whitespace-nowrap"
+              >
+                {shortcut.name}
+              </a>
+            );
+          })}
         </div>
       </div>
       <div className="flex items-center">
         <a
           href={!isLoggedIn ? process.env.REACT_APP_SSO_URL : "#"}
-          className="hidden md:inline-block relative w-48 md:w-48 lg:w-full text-ellipsis overflow-hidden whitespace-nowrap font-semibold hover:bg-sky-600 hover:text-white p-2 md:px-2 "
+          className="flex items-center font-semibold text-gray-600 hover:bg-sky-600 hover:text-white p-2 md:px-2 "
         >
-          {!isLoggedIn ? "My Account" : user.displayName}
+          <div className="">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              className="w-6"
+              viewBox="0 0 16 16"
+            >
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+            </svg>
+          </div>
+          <span className="hidden md:inline-block relative w-48 md:w-48 lg:w-full text-ellipsis overflow-hidden whitespace-nowrap">
+            {" "}
+            {!isLoggedIn ? "Login" : user.displayName}
+          </span>
         </a>
         {isLoggedIn && (
           <button
