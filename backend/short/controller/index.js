@@ -1,6 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { getPreivew } = require("../../utils/linkPreview");
+const { getPreivew, containURL } = require("../../utils/linkPreview");
 const { query, queryResult } = require("../../utils/sql.js");
 const { makeId } = require("../../utils/index");
 const validator = require("validator");
@@ -33,7 +33,7 @@ async function newShort(req, res, next) {
       req.body.data.content,
       "active",
       password,
-      expiries
+      expiries,
     ];
     var result = await queryResult(
       `SELECT * FROM short WHERE path_name = ?`,
@@ -67,7 +67,16 @@ async function getShort(req, res, next) {
       `SELECT name, content, type, display_name, avatar, password, expiries FROM short JOIN user ON user.id = short.user_id WHERE path_name = ?`,
       [pathName]
     );
-    var expiries = result[0].expiries != null ? new Date(result[0].expiries) : null;
+    if (result.length == 0)
+      return res.status(403).json({
+        status: "failure",
+        message: "Short is not found",
+        data: {
+          issue: "notFound",
+        },
+      });
+    var expiries =
+      result[0].expiries != null ? new Date(result[0].expiries) : null;
     if (expiries != null) {
       var now = new Date();
       if (now > expiries)
@@ -79,7 +88,6 @@ async function getShort(req, res, next) {
           },
         });
     }
-    if (result.length == 0) throw new Error("Not Found");
     if (result[0].password != null) {
       if (password == null)
         return res.status(403).json({
@@ -108,6 +116,7 @@ async function getShort(req, res, next) {
           displayName: result[0].display_name,
           avatar: result[0].avatar,
         },
+        containURL: containURL(result[0].content),
       },
     };
     if (result[0].type == "URL")

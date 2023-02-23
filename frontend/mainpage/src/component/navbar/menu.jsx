@@ -1,12 +1,29 @@
-export const shortcuts = [{
+export const shortcuts = [
+  {
     name: "AiT Studio",
-    url: "https://anhit.name.vn"
-  },{
+    url: "https://anhit.name.vn",
+  },
+  {
     name: "Short by AiT",
-    url: "#"
+    url: "#",
   },
   {
     name: "Uni Schedule",
-    url: "#"
+    url: "#",
   },
-  ]
+];
+
+export const menu = [
+  {
+    name: "About",
+    url: "#",
+  },
+  {
+    name: "Product",
+    url: "#",
+  },
+  {
+    name: "Contact",
+    url: "#",
+  },
+];

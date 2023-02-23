@@ -8,7 +8,7 @@ export const LoginPage = ({}) => {
         className="flex flew-col w-full h-full min-h-screen bg-repeat bg-cover bg-center"
         style={{
           backgroundImage:
-            "url(https://i.ibb.co/JktJHQY/technology-6873010.jpg)",
+            "url(/background.jpg)",
         }}
       >
         <div className="h-full w-full md:w-2/5 backdrop-blur-xl md:drop-shadow-xl min-h-screen">

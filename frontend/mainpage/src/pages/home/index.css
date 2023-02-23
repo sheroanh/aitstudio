@@ -6,7 +6,7 @@
     --white: #ffffff;
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: var(--primary-color);
 }
@@ -18,7 +18,7 @@
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--secondary-color);
-}
+} */
 
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,10 +29,10 @@ a {
     text-decoration: none;
 }
 
-div {
+/* div {
     scroll-margin-block-start: 80px;
     scroll-margin-block-end: 80px;
-}
+} */
 /* layout */
 
 
@@ -57,23 +57,15 @@ div {
 .body {
     display: block;
     position: absolute;
-    top: 100px;
-    width: 100%;
-}
-
-/* header */
-.sticky {
-    position: fixed;
-    top: 0;
+    top: 80px;
     width: 100%;
 }
 
 .header {
     display: flex;
-    padding: 10px 10px 10px 10px;
     justify-content: space-between;
     align-items: center;
-    z-index: 100;
+    z-index: 15;
     background-color: var(--primary-color);
 }
 
@@ -102,7 +94,7 @@ div {
     justify-content: space-between;
     align-items: center;
     overflow-x: auto;
-    padding: 0px 20px;
+    padding: 0px 0px;
 }
 
 .header>.menu::-webkit-scrollbar-track {
