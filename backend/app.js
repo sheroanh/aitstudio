@@ -12,8 +12,13 @@ var PORT = process.env.PORT || 5000;
 var HOSTNAME = process.env.HOSTNAME || "localhost";
 
 const origin = [
-  process.env.WEB_BASE_URI, "http://localhost:3000", "https://sso.anhit.name.vn", "http://localhost:3001"
-]
+  process.env.WEB_BASE_URI,
+  "http://localhost:3000",
+  "https://sso.anhit.name.vn",
+  "http://localhost:3001",
+  "https://short.anhit.name.vn",
+  "https://s.anhit.name.vn"
+];
 
 var corsOptions = {
   origin: origin,
@@ -39,7 +44,7 @@ app.use((req, res) => {
   return res.status(404).json({
     status: "failure",
     message: "Not Found",
-  });;
+  });
 });
 
 app.use((error, req, res, next) => {
