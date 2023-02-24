@@ -90,13 +90,14 @@ export const AccountBar = ({
   className = "flex items-center pl-3 justify-between w-full h-fit shadow border-0 border-b text-sm fixed z-50 bg-white",
 }) => {
   const router = useRouter()
+  const { asPath, pathname } = useRouter();
   const { isLoggedIn, user, logOut } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const userToggle = () => {
     if (isLoggedIn) {
       setShowUserMenu(!showUserMenu);
       console.log(showUserMenu);
-    } else {router.push(process.env.NEXT_PUBLIC_SSO_URL);console.log(process.env.NEXT_PUBLIC_SSO_URL);};
+    } else {router.push(process.env.NEXT_PUBLIC_SSO_URL+`?redirectUrl=`+asPath)};
   };
   return (
     <div className={className}>
